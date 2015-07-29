@@ -5,8 +5,15 @@
     <persistence-unit name="appJpaUnit">
         <provider>com.orientechnologies.orient.object.jpa.OJPAPersistenceProvider</provider>
 
-        <!-- JPA entities must be registered here 
-        <class>com.example.domain.MyPOJO</class> -->
+        <!-- JPA entities must be registered here  --> 
+        <class>com.tangela.core.model.BelongTo</class>
+        <class>com.tangela.core.model.FundingTo</class>
+        <class>com.tangela.core.model.WorkAs</class>
+        <class>com.tangela.core.model.WorkIn</class>
+        <class>com.tangela.core.model.User</class>
+        <class>com.tangela.core.model.Startup</class>
+        <class>com.tangela.core.model.Market</class>
+        <class>com.tangela.core.model.Location</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="remote:localhost:2480/Tangela.odb" />
