@@ -22,7 +22,7 @@
             
             <!-- Register whole package.
             See com.orientechnologies.orient.core.entity.OEntityManager.registerEntityClasses(String) for more details -->
-            <property name="com.orientdb.entityClasses" value="com.example.domains" />
+            <property name="com.orientdb.entityClasses" value="com.tangela.core.model" />
         </properties>
     </persistence-unit>
 </persistence>
