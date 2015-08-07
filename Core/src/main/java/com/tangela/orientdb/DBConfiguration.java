@@ -1,7 +1,34 @@
-package com.tangela
+package com.tangela.orientdb;
+
+import java.util.Properties;
+
+import com.tangela.util.Configuration;
 
 public class DBConfiguration 
 {
+	private static volatile DBConfiguration instance;
+	
+	private DBConfiguration() 
+	{
+		readConfig();
+	}
+	
+	/**
+     * Get the only instance of this class.
+     *
+     * @return the single instance.
+     */
+	public static DBConfiguration getInstance() {
+        if (instance == null) {
+            synchronized (Configuration.class) {
+                if (instance == null) {
+                    instance = new DBConfiguration();
+                }
+            }
+        }
+        return instance;
+    }
+	
 	public enum ConfigKey 
 	{
 	    DB_URL("db.url"), /**/
@@ -10,7 +37,6 @@ public class DBConfiguration
 	    MODEL_PACKAGE_PREFIX("db.entities.package"), /**/
 	    OPEN_IN_VIEW_DOCDB("db.open-in-view.documentdb"), /**/
 	    OPEN_IN_VIEW_OBJECTDB("db.open-in-view.objectdb"), /**/
-	    OPEN_IN_VIEW_GRAPHDB("db.open-in-view.graphdb"), /**/
 	    LOGGER("logger");
 	    
 	    private final String key;
@@ -25,78 +51,107 @@ public class DBConfiguration
 	    
 	}
 	
-    public static final int OIV_DOCUMENT_DB = 0x0001;
+	public static final int OIV_DOCUMENT_DB = 0x0001;
     public static final int OIV_OBJECT_DB = 0x002;
     public static final int OIV_GRAPH_DB = 0x004; // 8, 16
-
-	public String url;
-	public String username;
-	public String password;
-	public String graphurl;
-	public String configFile;
 	
 	/**
 	 * The package prefix of all the classes that should be interesting for OrientDB's mapper
 	 * Out of these only those classes are registered, which have the @Entity annotation
 	 */
-	public String packagePrefix;
-	public int openInView;
+	private String packagePrefix;
+	private int openInView;
 	
-	public void readConfig() 
+	private String url;
+	private String username;
+	private String password;
+	
+	private void readConfig() 
 	{
-		//TODO: levantar properties con valores
-		Configuration orientConf = Configuration.root().getConfig(PREFIX);
+		Properties conf = Configuration.getInstance().getProperties();
 		
-    	url = readString(orientConf, ConfigKey.DB_URL, "memory:temp");
-    	username = readString(orientConf, ConfigKey.DB_USERNAME, "admin");
-    	password = readString(orientConf, ConfigKey.DB_PASSWORD, "admin");
+    	url = readString(conf, ConfigKey.DB_URL, "memory:temp");
+    	username = readString(conf, ConfigKey.DB_USERNAME, "admin");
+    	password = readString(conf, ConfigKey.DB_PASSWORD, "admin");
     	
-    	packagePrefix = readString(orientConf, ConfigKey.MODEL_PACKAGE_PREFIX, "models.*");
+    	//TODO: Create entity tag for model.
+    	packagePrefix = readString(conf, ConfigKey.MODEL_PACKAGE_PREFIX, "models.*");
     	
-    	boolean view = readBoolean(orientConf, ConfigKey.OPEN_IN_VIEW_DOCDB, true);
+    	boolean view = readBoolean(conf, ConfigKey.OPEN_IN_VIEW_DOCDB, true);
     	openInView |= view? OIV_DOCUMENT_DB : 0;
     	
-    	view = readBoolean(orientConf, ConfigKey.OPEN_IN_VIEW_OBJECTDB, true);
+    	view = readBoolean(conf, ConfigKey.OPEN_IN_VIEW_OBJECTDB, true);
     	openInView |= view? OIV_OBJECT_DB : 0;
-    	
-    	view = readBoolean(orientConf, ConfigKey.OPEN_IN_VIEW_GRAPHDB, true);
-    	openInView |= view? OIV_GRAPH_DB : 0;
 	}
 	
 	public boolean isServerRemote() 
 	{
 		return url.startsWith("remote");
 	}
-	
-    private static String readString(Configuration cfg, String key, String defValue) {
+    
+    private static String readString(Properties cfg, ConfigKey key, String defValue) {
     	if(cfg == null)
     		return defValue;
     	
-    	String val = cfg.getString(key);
+    	String val = cfg.getProperty(key.getKey());
     	return (val == null) ? defValue : val;
     }
     
-    private static String readString(Configuration cfg, ConfigKey key, String defValue) {
+    private static boolean readBoolean(Properties cfg, ConfigKey key, boolean defValue) {
     	if(cfg == null)
     		return defValue;
     	
-    	String val = cfg.getString(key.getKey());
+    	Boolean val = new Boolean(cfg.getProperty(key.getKey()));
     	return (val == null) ? defValue : val;
     }
-    
-    private static boolean readBoolean(Configuration cfg, String key, boolean defValue) {
-    	if(cfg == null)
-    		return defValue;
-    	
-    	Boolean val = cfg.getBoolean(key);
-    	return (val == null) ? defValue : val;
-    }
-    
-    private static boolean readBoolean(Configuration cfg, ConfigKey key, boolean defValue) {
-    	if(cfg == null)
-    		return defValue;
-    	
-    	Boolean val = cfg.getBoolean(key.getKey());
-    	return (val == null) ? defValue : val;
-    }
+
+	public String getPackagePrefix()
+	{
+		return packagePrefix;
+	}
+
+	public void setPackagePrefix(String packagePrefix)
+	{
+		this.packagePrefix = packagePrefix;
+	}
+
+	public int getOpenInView()
+	{
+		return openInView;
+	}
+
+	public void setOpenInView(int openInView)
+	{
+		this.openInView = openInView;
+	}
+
+	public String getUrl()
+	{
+		return url;
+	}
+
+	public void setUrl(String url)
+	{
+		this.url = url;
+	}
+
+	public String getUsername()
+	{
+		return username;
+	}
+
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
+
+	public String getPassword()
+	{
+		return password;
+	}
+
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
 }

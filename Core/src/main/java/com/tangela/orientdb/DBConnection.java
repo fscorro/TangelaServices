@@ -1,20 +1,8 @@
-package com.tangela
+package com.tangela.orientdb;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import modules.orientdb.conf.DBConfiguration;
-
-import play.api.UnexpectedException;
-import scala.Option;
-
-import com.orientechnologies.orient.core.db.ODatabase;
-import com.orientechnologies.orient.core.db.ODatabaseListener;
-import com.orientechnologies.orient.core.db.document.ODatabaseDocumentPool;
+import com.orientechnologies.orient.core.db.OPartitionedDatabasePool;
+import com.orientechnologies.orient.core.db.OPartitionedDatabasePoolFactory;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
-import com.orientechnologies.orient.core.db.graph.OGraphDatabase;
-import com.orientechnologies.orient.core.db.graph.OGraphDatabasePool;
-import com.orientechnologies.orient.core.hook.ORecordHook;
 import com.orientechnologies.orient.core.tx.OTransaction.TXTYPE;
 import com.orientechnologies.orient.object.db.OObjectDatabasePool;
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
@@ -25,12 +13,11 @@ import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 public class DBConnection {
 
     public enum DBTYPE {
-        DOCUMENT, OBJECT, GRAPH
+        DOCUMENT, OBJECT
     };
 
     static final ThreadLocal<OObjectDatabaseTx> localObjectTx = new ThreadLocal<OObjectDatabaseTx>();
     static final ThreadLocal<ODatabaseDocumentTx> localDocumentTx = new ThreadLocal<ODatabaseDocumentTx>();
-    static final ThreadLocal<OGraphDatabase> localGraphTx = new ThreadLocal<OGraphDatabase>();
 
     /**
      * This opens the requested database type (Document or Object) and starts a transaction
@@ -51,7 +38,6 @@ public class DBConnection {
     public static void close() {
         closeDocument();
         closeObject();
-        closeGraph();
     }
 
     /**
@@ -61,16 +47,6 @@ public class DBConnection {
         if (hasDocumentTx()) {
             localDocumentTx.get().close();
             localDocumentTx.set(null);
-        }
-    }
-
-    /**
-     * Close the GraphDatabase, if opened for the current thread.
-     */
-    public static void closeGraph() {
-        if (hasGraphTx()) {
-            localGraphTx.get().close();
-            localGraphTx.set(null);
         }
     }
 
@@ -103,30 +79,14 @@ public class DBConnection {
      * @return
      */
     public static ODatabaseDocumentTx openDocumentDB() {
-    	DBConfiguration pluginConf = ODBPlugin.getInstance().getConf();
-        if (!hasDocumentTx()) {
-            ODatabaseDocumentTx db = ODatabaseDocumentPool.global().acquire(pluginConf.url, pluginConf.username,
-            		pluginConf.password);
-            localDocumentTx.set(db);
-            registerListeners(db);
+        if (!hasDocumentTx() || localDocumentTx.get().isClosed()) 
+        {
+        	DBConfiguration pluginConf = DBConfiguration.getInstance();
+			OPartitionedDatabasePoolFactory factory = new OPartitionedDatabasePoolFactory();
+			OPartitionedDatabasePool db = factory.get(pluginConf.getUrl(), pluginConf.getUsername(), pluginConf.getPassword());
+			localDocumentTx.set(db.acquire());
         }
         return localDocumentTx.get();
-    }
-
-    /**
-     * Creates a new or acquires an existing GraphDatabase from the pool for the current Thread.
-     * @return
-     */
-    public static OGraphDatabase openGraphDB() {
-    	DBConfiguration pluginConf = ODBPlugin.getInstance().getConf();
-        if (!hasGraphTx()) {
-            OGraphDatabase db = OGraphDatabasePool.global().acquire(
-                    (pluginConf.graphurl == null) ? pluginConf.url : pluginConf.graphurl, 
-                    		pluginConf.username, pluginConf.password);
-            localGraphTx.set(db);
-            registerListeners(db);
-        }
-        return localGraphTx.get();
     }
 
     /**
@@ -134,13 +94,12 @@ public class DBConnection {
      * @return
      */
     public static OObjectDatabaseTx openObjectDB() {
-        if (!hasObjectTx() || localObjectTx.get().isClosed()) {
-        	DBConfiguration pluginConf = ODBPlugin.getInstance().getConf();
-        	OObjectDatabaseTx db = OObjectDatabasePool.global()
-                    .acquire(pluginConf.url, pluginConf.username, pluginConf.password);
-            localObjectTx.set(db);
-            registerListeners(db);
-            registerHooks(db);
+        if (!hasObjectTx() || localObjectTx.get().isClosed()) 
+        {
+        	DBConfiguration pluginConf = DBConfiguration.getInstance();
+        	OObjectDatabaseTx db = OObjectDatabasePool.global().acquire(pluginConf.getUrl(), pluginConf.getUsername(), pluginConf.getPassword());
+        	
+        	localObjectTx.set(db);
         }
         return localObjectTx.get();
     }
@@ -159,10 +118,6 @@ public class DBConnection {
 
     private static boolean hasDocumentTx() {
         return localDocumentTx.get() != null;
-    }
-
-    private static boolean hasGraphTx() {
-        return localGraphTx.get() != null;
     }
 
     private static boolean hasObjectTx() {
