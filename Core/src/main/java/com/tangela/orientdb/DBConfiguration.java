@@ -53,7 +53,6 @@ public class DBConfiguration
 	
 	public static final int OIV_DOCUMENT_DB = 0x0001;
     public static final int OIV_OBJECT_DB = 0x002;
-    public static final int OIV_GRAPH_DB = 0x004; // 8, 16
 	
 	/**
 	 * The package prefix of all the classes that should be interesting for OrientDB's mapper
@@ -74,7 +73,7 @@ public class DBConfiguration
     	username = readString(conf, ConfigKey.DB_USERNAME, "admin");
     	password = readString(conf, ConfigKey.DB_PASSWORD, "admin");
     	
-    	//TODO: Create entity tag for model.
+    	//TODO: Create @entity tag for model.
     	packagePrefix = readString(conf, ConfigKey.MODEL_PACKAGE_PREFIX, "models.*");
     	
     	boolean view = readBoolean(conf, ConfigKey.OPEN_IN_VIEW_DOCDB, true);
