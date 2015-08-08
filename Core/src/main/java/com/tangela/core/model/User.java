@@ -1,5 +1,8 @@
 package com.tangela.core.model;
 
+import javax.persistence.Entity;
+
+@Entity(name="User")
 public class User
 {
 	private Integer angelId;

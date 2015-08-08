@@ -11,7 +11,7 @@ public final class Configuration
 	
 	private static Properties prop = new Properties();
 
-	private Configuration() 
+	private Configuration()
 	{
 		InputStream input = null;
 		try
@@ -51,8 +51,11 @@ public final class Configuration
      * Get the only instance of this class.
      *
      * @return the single instance.
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
      */
-	public static Configuration getInstance() {
+	public static Configuration getInstance()
+	{
         if (instance == null) {
             synchronized (Configuration.class) {
                 if (instance == null) {

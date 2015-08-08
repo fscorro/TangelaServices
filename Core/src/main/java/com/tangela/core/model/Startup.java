@@ -2,6 +2,9 @@ package com.tangela.core.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity(name="Startup")
 public class Startup
 {
 	private Integer angelId;

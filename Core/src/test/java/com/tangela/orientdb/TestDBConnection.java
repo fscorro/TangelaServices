@@ -11,7 +11,7 @@ public class TestDBConnection
 	@Test
 	public void testGetDBConnection()
 	{
-		ODatabaseDocumentTx docTx = DBConnection.openDocumentDB();
+		ODatabaseDocumentTx docTx = ODBConnection.openDocumentDB();
 		
 		docTx.begin();
 
@@ -22,7 +22,7 @@ public class TestDBConnection
 		
 		docTx.close();
 		
-		OObjectDatabaseTx objTx = DBConnection.openObjectDB();
+		OObjectDatabaseTx objTx = ODBConnection.openObjectDB();
 		
 		objTx.begin();
 		

@@ -4,11 +4,11 @@ import java.util.Properties;
 
 import com.tangela.util.Configuration;
 
-public class DBConfiguration 
+public class ODBConfiguration 
 {
-	private static volatile DBConfiguration instance;
+	private static volatile ODBConfiguration instance;
 	
-	private DBConfiguration() 
+	private ODBConfiguration() 
 	{
 		readConfig();
 	}
@@ -18,11 +18,11 @@ public class DBConfiguration
      *
      * @return the single instance.
      */
-	public static DBConfiguration getInstance() {
+	public static ODBConfiguration getInstance() {
         if (instance == null) {
             synchronized (Configuration.class) {
                 if (instance == null) {
-                    instance = new DBConfiguration();
+                    instance = new ODBConfiguration();
                 }
             }
         }
@@ -73,7 +73,6 @@ public class DBConfiguration
     	username = readString(conf, ConfigKey.DB_USERNAME, "admin");
     	password = readString(conf, ConfigKey.DB_PASSWORD, "admin");
     	
-    	//TODO: Create @entity tag for model.
     	packagePrefix = readString(conf, ConfigKey.MODEL_PACKAGE_PREFIX, "models.*");
     	
     	boolean view = readBoolean(conf, ConfigKey.OPEN_IN_VIEW_DOCDB, true);

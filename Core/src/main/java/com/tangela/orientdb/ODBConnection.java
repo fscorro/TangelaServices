@@ -10,7 +10,7 @@ import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
 /**
  * This class wraps top level operations to work with an OrientDB Database (Object, Graph, Document)
  */
-public class DBConnection {
+public class ODBConnection {
 
     public enum DBTYPE {
         DOCUMENT, OBJECT
@@ -81,7 +81,7 @@ public class DBConnection {
     public static ODatabaseDocumentTx openDocumentDB() {
         if (!hasDocumentTx() || localDocumentTx.get().isClosed()) 
         {
-        	DBConfiguration pluginConf = DBConfiguration.getInstance();
+        	ODBConfiguration pluginConf = ODBConfiguration.getInstance();
 			OPartitionedDatabasePoolFactory factory = new OPartitionedDatabasePoolFactory();
 			OPartitionedDatabasePool db = factory.get(pluginConf.getUrl(), pluginConf.getUsername(), pluginConf.getPassword());
 			localDocumentTx.set(db.acquire());
@@ -96,7 +96,7 @@ public class DBConnection {
     public static OObjectDatabaseTx openObjectDB() {
         if (!hasObjectTx() || localObjectTx.get().isClosed()) 
         {
-        	DBConfiguration pluginConf = DBConfiguration.getInstance();
+        	ODBConfiguration pluginConf = ODBConfiguration.getInstance();
         	OObjectDatabaseTx db = OObjectDatabasePool.global().acquire(pluginConf.getUrl(), pluginConf.getUsername(), pluginConf.getPassword());
         	
         	localObjectTx.set(db);

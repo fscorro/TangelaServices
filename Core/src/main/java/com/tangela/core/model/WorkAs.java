@@ -2,6 +2,9 @@ package com.tangela.core.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity(name="WorkAs")
 public class WorkAs
 {
 	private Integer angelId;

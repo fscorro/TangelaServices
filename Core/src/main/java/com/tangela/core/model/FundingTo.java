@@ -2,6 +2,9 @@ package com.tangela.core.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity(name="FundingTo")
 public class FundingTo
 {
 	private Double mount;
