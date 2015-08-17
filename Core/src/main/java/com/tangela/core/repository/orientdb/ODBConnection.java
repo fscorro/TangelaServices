@@ -1,4 +1,4 @@
-package com.tangela.orientdb;
+package com.tangela.core.repository.orientdb;
 
 import com.orientechnologies.orient.core.db.OPartitionedDatabasePool;
 import com.orientechnologies.orient.core.db.OPartitionedDatabasePoolFactory;

@@ -1,4 +1,4 @@
-package com.tangela.orientdb;
+package com.tangela.core.repository.orientdb;
 
 import java.util.HashSet;
 import java.util.Iterator;

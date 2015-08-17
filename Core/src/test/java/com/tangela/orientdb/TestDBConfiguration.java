@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.tangela.core.repository.orientdb.ODBConfiguration;
+
 public class TestDBConfiguration
 {
 	 @Test

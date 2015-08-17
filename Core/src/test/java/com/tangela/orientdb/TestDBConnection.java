@@ -5,6 +5,7 @@ import org.junit.Test;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 import com.orientechnologies.orient.object.db.OObjectDatabaseTx;
+import com.tangela.core.repository.orientdb.ODBConnection;
 
 public class TestDBConnection
 {
@@ -14,7 +15,7 @@ public class TestDBConnection
 		ODatabaseDocumentTx docTx = ODBConnection.openDocumentDB();
 		
 		docTx.begin();
-
+		
 		for (ODocument doc : docTx.browseClass("Country")) 
 		{
 			System.out.println( doc.field("displayName") );
