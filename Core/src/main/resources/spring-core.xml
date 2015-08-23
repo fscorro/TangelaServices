@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+	<aop:aspectj-autoproxy />
+	
+	<!-- Repositories -->
+	<bean id="belongToRepository" class="com.tangela.core.repository.orientdb.BelongToRepositoryODB" />
+	<bean id="fundingToRepository" class="com.tangela.core.repository.orientdb.FundingToRepositoryODB" />
+	<bean id="locationRepository" class="com.tangela.core.repository.orientdb.LocationRepositoryODB" />
+	<bean id="marketRepository" class="com.tangela.core.repository.orientdb.MarketRepositoryODB" />
+	<bean id="startupRepository" class="com.tangela.core.repository.orientdb.StartupRepositoryODB" />
+	<bean id="userRepository" class="com.tangela.core.repository.orientdb.UserRepositoryODB" />
+	<bean id="workAsRepository" class="com.tangela.core.repository.orientdb.WorkAsRepositoryODB" />
+	<bean id="workInRepository" class="com.tangela.core.repository.orientdb.WorkInRepositoryODB" />
+
+	<!-- Aspect -->
+	<bean id="logAspect" class="com.tangela.core.repository.orientdb.aop.ODBTransactionWrapper" />
+</beans>

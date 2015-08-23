@@ -5,5 +5,5 @@ import com.tangela.core.repository.BelongToRepository;
 
 public class BelongToRepositoryODB extends RepositoryODB<BelongTo> implements BelongToRepository
 {
-
+	
 }

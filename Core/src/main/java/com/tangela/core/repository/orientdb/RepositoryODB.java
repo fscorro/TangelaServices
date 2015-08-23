@@ -32,17 +32,16 @@ public class RepositoryODB<T> implements Repository<T>
     }
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public T save(T instance)
 	{
-		return (T) objectDB().save(instance);
+		return objectDB().save(instance);
 	}
 
 	@Override
 	public T refresh(T instance)
 	{
 		objectDB().reload(instance);
-        return (T) instance;
+        return instance;
 	}
 
 	@Override
@@ -52,12 +51,11 @@ public class RepositoryODB<T> implements Repository<T>
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public T findById(ORID id)
 	{
 		try 
 		{
-			return (T) objectDB().load(id);
+			return objectDB().load(id);
 	    }
 		catch (ORecordNotFoundException e)
 		{
