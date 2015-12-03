@@ -1,2 +1,12 @@
-.DS_Store
+#deploy
 target
+
+# IntelliJ
+/out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Mac
+.DS_Store
