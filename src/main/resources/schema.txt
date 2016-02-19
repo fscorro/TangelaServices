@@ -1,0 +1,146 @@
+CONNECT remote:localhost/Tangela root R3k&Do1ps;
+
+create class Market extends V;
+create property Market.angelId Long;
+alter property Market.angelId MANDATORY true;
+alter property Market.angelId NOTNULL true;
+create property Market.name String;
+alter property Market.name MANDATORY true;
+alter property Market.name NOTNULL true;
+create property Market.displayName String;
+alter property Market.displayName MANDATORY true;
+alter property Market.displayName NOTNULL true;
+create property Market.angelUrl String;
+alter property Market.angelUrl MANDATORY true;
+alter property Market.angelUrl NOTNULL true;
+
+create class Location abstract extends V;
+create property Location.angelId Long;
+alter property Location.angelId MANDATORY true;
+alter property Location.angelId NOTNULL true;
+create property Location.name String;
+alter property Location.name MANDATORY true;
+alter property Location.name NOTNULL true;
+create property Location.displayName String;
+alter property Location.displayName MANDATORY true;
+alter property Location.displayName NOTNULL true;
+create property Location.angelUrl String;
+alter property Location.angelUrl MANDATORY true;
+alter property Location.angelUrl NOTNULL true;
+
+create class Earth extends Location;
+create class Continent extends Location;
+create class Country extends Location;
+create class City extends Location;
+
+create class Startup extends V;
+create property Startup.angelId Long;
+alter property Startup.angelId MANDATORY true;
+alter property Startup.angelId NOTNULL true;
+create property Startup.name String;
+alter property Startup.name MANDATORY true;
+alter property Startup.name NOTNULL true;
+create property Startup.angelUrl String;
+alter property Startup.angelUrl MANDATORY true;
+alter property Startup.angelUrl NOTNULL true;
+create property Startup.quality integer;
+alter property Startup.quality MANDATORY true;
+alter property Startup.quality NOTNULL true;
+create property Startup.createdAt date;
+alter property Startup.createdAt MANDATORY true;
+alter property Startup.createdAt NOTNULL true;
+create property Startup.logoUrl String;
+create property Startup.thumbUrl String;
+create property Startup.productDescription String;
+create property Startup.highConcept String;
+create property Startup.followersCount Integer;
+create property Startup.companyUrl String;
+create property Startup.updatedAt Date;
+create property Startup.twitterUrl String;
+create property Startup.blogUrl String;
+create property Startup.videoUrl String;
+
+create class User extends V;
+create property User.angelId Long;
+alter property User.angelId MANDATORY true;
+alter property User.angelId NOTNULL true;
+create property User.name String;
+alter property User.name MANDATORY true;
+alter property User.name NOTNULL true;
+create property User.angelUrl String;
+alter property User.angelUrl MANDATORY true;
+alter property User.angelUrl NOTNULL true;
+create property User.biography String;
+create property User.followersCount Integer;
+create property User.imageUrl String;
+create property User.blogUrl String;
+create property User.onlineBioUrl String;
+create property User.twitterUrl String;
+create property User.facebookUrl String;
+create property User.linkedinUrl String;
+create property User.investor Boolean;
+
+create class Round extends V;
+create property Round.angelId Long;
+alter property Round.angelId MANDATORY true;
+alter property Round.angelId NOTNULL true;
+create property Round.name String;
+create property Round.roundType String;
+create property Round.raised String;
+create property Round.roundClosedAt Date;
+create property Round.roundId Long;
+create property Round.roundSourceUrl String;
+create property Round.participantName String;
+create property Round.participantType String;
+create property Round.participantId String;
+
+create class WorkIn extends E;
+create property WorkIn.out LINK Startup;
+alter property WorkIn.out MANDATORY true;
+create property WorkIn.in LINK Market;
+alter property WorkIn.in MANDATORY true;
+
+create class RoleIn extends E;
+create property RoleIn.angelId Long;
+alter property RoleIn.angelId MANDATORY true;
+create property RoleIn.role String;
+alter property RoleIn.role MANDATORY true;
+alter property RoleIn.role REGEXP [F|E|P|C|A|I];
+create property RoleIn.createdAt Date;
+alter property RoleIn.createdAt MANDATORY true;
+create property RoleIn.endedAt Date;
+create property RoleIn.confirmed Boolean;
+create property RoleIn.in LINK Startup;
+alter property RoleIn.in MANDATORY true;
+
+create class RoleInStartUp extends RoleIn;
+create property RoleInStartUp.out LINK Startup;
+alter property RoleInStartUp.out MANDATORY true;
+
+create class BelongTo extends E;
+create property BelongTo.in LINK Location;
+alter property BelongTo.in MANDATORY true;
+create property BelongTo.out LINK Location;
+alter property BelongTo.out MANDATORY true;
+
+create class ClosedRound extends E;
+create property ClosedRound.in LINK Round;
+alter property ClosedRound.in MANDATORY true;
+create property ClosedRound.out LINK Startup;
+alter property ClosedRound.out MANDATORY true;
+
+create class ResideIn extends E;
+create property ResideIn.in LINK Location;
+alter property ResideIn.in MANDATORY true;
+create property ResideIn.out LINK Startup;
+alter property ResideIn.out MANDATORY true;
+
+create class FundingTo extends E;
+create property FundingTo.mount Double;
+alter property FundingTo.mount MANDATORY true;
+create property FundingTo.typeRaise String;
+alter property FundingTo.typeRaise MANDATORY true;
+create property FundingTo.raiseId Long;
+alter property FundingTo.raiseId MANDATORY true;
+create property FundingTo.date Date;
+alter property FundingTo.date MANDATORY true;
