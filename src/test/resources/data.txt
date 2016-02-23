@@ -1,0 +1,99 @@
+CONNECT remote:localhost/Tangela root R3k&Do1ps;
+
+insert into Earth (angelId, name, displayName, angelUrl) values (1643, 'Earth', 'Earth', 'https://angel.co/earth');
+
+insert into Continent (angelId, name, displayName, angelUrl) values (1665, 'North America', 'North America', 'https://angel.co/north-america');
+insert into Continent (angelId, name, displayName, angelUrl) values (1642, 'Europe', 'Europe', 'https://angel.co/europe');
+insert into Continent (angelId, name, displayName, angelUrl) values (1615, 'Asia', 'Asia', 'https://angel.co/asia');
+insert into Continent (angelId, name, displayName, angelUrl) values (1683, 'South America', 'South America', 'https://angel.co/south-america');
+insert into Continent (angelId, name, displayName, angelUrl) values (2067, 'Oceania', 'Oceania', 'https://angel.co/oceania');
+insert into Continent (angelId, name, displayName, angelUrl) values (1819, 'Africa', 'Africa', 'https://angel.co/africa');
+
+insert into Country (angelId, name, displayName, angelUrl) values (3001, 'Austria', 'Austria', 'https://angel.co/austria');
+insert into Country (angelId, name, displayName, angelUrl) values (3002, 'Belgium', 'Belgium', 'https://angel.co/belgium');
+insert into Country (angelId, name, displayName, angelUrl) values (3003, 'Canada', 'Canada', 'https://angel.co/canada');
+insert into Country (angelId, name, displayName, angelUrl) values (3004, 'Costa Rica', 'Costa Rica', 'https://angel.co/costa-rica');
+
+insert into City (angelId, name, displayName, angelUrl) values (3005, 'Vienna', 'Vienna', 'https://angel.co/vienna');
+insert into City (angelId, name, displayName, angelUrl) values (3006, 'Salzburg', 'Salzburg', 'https://angel.co/salzburg');
+insert into City (angelId, name, displayName, angelUrl) values (3007, 'Antwerp', 'Antwerp', 'https://angel.co/antwerp');
+insert into City (angelId, name, displayName, angelUrl) values (3008, 'Brussels', 'Brussels', 'https://angel.co/brussels');
+insert into City (angelId, name, displayName, angelUrl) values (3009, 'Manitoba', 'Manitoba', 'https://angel.co/manitoba');
+insert into City (angelId, name, displayName, angelUrl) values (3010, 'Ontario', 'Ontario', 'https://angel.co/ontario');
+insert into City (angelId, name, displayName, angelUrl) values (3011, 'San Jose', 'San Jose', 'https://angel.co/san-jose-costa-rica');
+insert into City (angelId, name, displayName, angelUrl) values (3012, 'Heredia', 'Heredia', 'https://angel.co/heredia');
+
+CREATE EDGE BelongTo FROM (SELECT FROM Continent WHERE angelId = 1665) TO (SELECT FROM Earth WHERE angelId = 1643);
+CREATE EDGE BelongTo FROM (SELECT FROM Continent WHERE angelId = 1642) TO (SELECT FROM Earth WHERE angelId = 1643);
+CREATE EDGE BelongTo FROM (SELECT FROM Continent WHERE angelId = 1615) TO (SELECT FROM Earth WHERE angelId = 1643);
+CREATE EDGE BelongTo FROM (SELECT FROM Continent WHERE angelId = 1683) TO (SELECT FROM Earth WHERE angelId = 1643);
+CREATE EDGE BelongTo FROM (SELECT FROM Continent WHERE angelId = 2067) TO (SELECT FROM Earth WHERE angelId = 1643);
+CREATE EDGE BelongTo FROM (SELECT FROM Continent WHERE angelId = 1819) TO (SELECT FROM Earth WHERE angelId = 1643);
+
+CREATE EDGE BelongTo FROM (SELECT FROM Country WHERE angelId = 3001) TO (SELECT FROM Continent WHERE angelId = 1642);
+CREATE EDGE BelongTo FROM (SELECT FROM Country WHERE angelId = 3002) TO (SELECT FROM Continent WHERE angelId = 1642);
+CREATE EDGE BelongTo FROM (SELECT FROM Country WHERE angelId = 3003) TO (SELECT FROM Continent WHERE angelId = 1683);
+CREATE EDGE BelongTo FROM (SELECT FROM Country WHERE angelId = 3004) TO (SELECT FROM Continent WHERE angelId = 1683);
+
+CREATE EDGE BelongTo FROM (SELECT FROM City WHERE angelId = 3005) TO (SELECT FROM Country WHERE angelId = 3001);
+CREATE EDGE BelongTo FROM (SELECT FROM City WHERE angelId = 3006) TO (SELECT FROM Country WHERE angelId = 3001);
+CREATE EDGE BelongTo FROM (SELECT FROM City WHERE angelId = 3007) TO (SELECT FROM Country WHERE angelId = 3002);
+CREATE EDGE BelongTo FROM (SELECT FROM City WHERE angelId = 3008) TO (SELECT FROM Country WHERE angelId = 3002);
+CREATE EDGE BelongTo FROM (SELECT FROM City WHERE angelId = 3009) TO (SELECT FROM Country WHERE angelId = 3003);
+CREATE EDGE BelongTo FROM (SELECT FROM City WHERE angelId = 3010) TO (SELECT FROM Country WHERE angelId = 3003);
+CREATE EDGE BelongTo FROM (SELECT FROM City WHERE angelId = 3011) TO (SELECT FROM Country WHERE angelId = 3004);
+CREATE EDGE BelongTo FROM (SELECT FROM City WHERE angelId = 3012) TO (SELECT FROM Country WHERE angelId = 3004);
+
+insert into Market (angelId, name, displayName, angelUrl) values (4000, 'Testing', 'Testing', 'https://angel.co/testing');
+insert into Market (angelId, name, displayName, angelUrl) values (4001, 'Virtualization', 'Virtualization', 'https://angel.co/virtualization');
+insert into Market (angelId, name, displayName, angelUrl) values (4002, 'Collaboration Software', 'Collaboration Software', 'https://angel.co/collaboration-software-1');
+insert into Market (angelId, name, displayName, angelUrl) values (4003, 'Translation', 'Translation', 'https://angel.co/translation');
+insert into Market (angelId, name, displayName, angelUrl) values (4004, 'Events', 'Events', 'https://angel.co/events');
+insert into Market (angelId, name, displayName, angelUrl) values (4005, 'Technology', 'Technology', 'https://angel.co/technology');
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (24507, 'Codeship', 'https://angel.co/codeship', 1, '2013-02-12');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 24507) TO (SELECT FROM City WHERE angelId = 3005);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 24507) TO (SELECT FROM Market WHERE angelId = 4000);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (234071, 'Opvizor', 'https://angel.co/opvizor', 1, '2012-02-05');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 234071) TO (SELECT FROM City WHERE angelId = 3005);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 234071) TO (SELECT FROM Market WHERE angelId = 4001);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (57273, 'Wikitude', 'https://angel.co/wikitude', 1, '2012-08-15');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 57273) TO (SELECT FROM City WHERE angelId = 3006);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 57273) TO (SELECT FROM Market WHERE angelId = 4002);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (112188, 'Mollom', 'https://angel.co/mollom', 1, '2014-05-22');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 112188) TO (SELECT FROM City WHERE angelId = 3007);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 112188) TO (SELECT FROM Market WHERE angelId = 4003);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (296769, 'Frontback', 'https://angel.co/frontback', 1, '2015-07-02');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 296769) TO (SELECT FROM City WHERE angelId = 3008);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 296769) TO (SELECT FROM Market WHERE angelId = 4004);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (283561, 'Po-motion', 'https://angel.co/po-motion-1', 1, '2011-04-14');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 283561) TO (SELECT FROM City WHERE angelId = 3009);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 283561) TO (SELECT FROM Market WHERE angelId = 4005);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (32420, 'Shopify', 'https://angel.co/shopify', 1, '2012-08-09');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 32420) TO (SELECT FROM City WHERE angelId = 3010);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 32420) TO (SELECT FROM Market WHERE angelId = 4003);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (500227, 'Bitnplay', 'https://angel.co/bitnplay', 1, '2014-07-12');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 500227) TO (SELECT FROM City WHERE angelId = 3011);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 500227) TO (SELECT FROM Market WHERE angelId = 4001);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (245040, 'Parso', 'https://angel.co/parso', 1, '2011-03-09');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 245040) TO (SELECT FROM City WHERE angelId = 3011);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 245040) TO (SELECT FROM Market WHERE angelId = 4004);
+
+insert into Startup (angelId, name, angelUrl, quality, createdAt) values (579844, 'Ace Global Hard Assets', 'https://angel.co/ace-global-hard-assets', 1, '2010-04-02');
+CREATE EDGE ResideIn FROM (SELECT FROM Startup WHERE angelId = 579844) TO (SELECT FROM City WHERE angelId = 3012);
+CREATE EDGE WorkIn FROM (SELECT FROM Startup WHERE angelId = 579844) TO (SELECT FROM Market WHERE angelId = 4003);
+
+insert into User (angelId, name, angelUrl) values (6000, "Eduardo Fuentes", 'https://angel.co/eduardo-fuentes');
+CREATE EDGE RoleIn FROM (SELECT FROM User WHERE angelId = 6000) TO (SELECT FROM Startup WHERE angelId = 579844) SET angelId = 7000, role = 'F', createdAt = '2010-04-02';
+CREATE EDGE RoleIn FROM (SELECT FROM User WHERE angelId = 6000) TO (SELECT FROM Startup WHERE angelId = 245040) SET angelId = 7001, role = 'C', createdAt = '2012-05-18';
+
+insert into User (angelId, name, angelUrl) values (6001, "Marcelo Delgado", 'https://angel.co/marcelo-delgado');
+CREATE EDGE RoleIn FROM (SELECT FROM User WHERE angelId = 6001) TO (SELECT FROM Startup WHERE angelId = 245040) SET angelId = 7002, role = 'F', createdAt = '2011-03-09';
