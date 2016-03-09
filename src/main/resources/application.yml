@@ -13,5 +13,5 @@ spring:
 orientdb:
   url: http://localhost:2480/
   user: root
-  password: R3k&Do1ps
+  password: Sq2FPS3La
   database: Tangela
