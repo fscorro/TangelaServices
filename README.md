@@ -4,6 +4,23 @@ To run application: mvn spring-boot:run -Drun.jvmArguments="-Dspring.profiles.ac
 
 Profiles: Local, prod.
 
+Scripts
+---------
+
+To run scripts: Go to OrientDb folder and execute console.sh, inside bin folder, with the path of the script file as parameter. The database must be on before to run the scripts.
+
+./console.sh src/main/resources/schema.txt
+
+The first line of every script has database name, user and password. Please check them before to run.
+
+Default database name: Tangela.
+Default user: root.
+
+Create schema: src/main/resources/schema.txt (create vertex and edges with the attributes).
+
+Populate test data: src/test/resources/data.txt
+Delete test data: src/test/resources/deleteData.txt
+
 Endpoints
 ---------
 
@@ -61,9 +78,9 @@ Receive a list of Startups.
          "twitterUrl":null,
          "blogUrl":null,
          "videoUrl":null,
-         "rid":"#17:0",
-         "version": 1,
-         "class":"Startup"
+         "@rid":"#17:0",
+         "@version": 1,
+         "@class":"Startup"
       },
       {  
          "angelId":234071,
@@ -81,9 +98,9 @@ Receive a list of Startups.
          "twitterUrl":null,
          "blogUrl":null,
          "videoUrl":null,
-         "rid":"#17:1",
-         "version": 1,
-         "class":"Startup"
+         "@rid":"#17:1",
+         "@version": 1,
+         "@class":"Startup"
       },
       {  
          "angelId":57273,
@@ -101,9 +118,9 @@ Receive a list of Startups.
          "twitterUrl":null,
          "blogUrl":null,
          "videoUrl":null,
-         "rid":"#17:2",
-         "version": 1,
-         "class":"Startup"
+         "@rid":"#17:2",
+         "@version": 1,
+         "@class":"Startup"
       }
    ]
 }
@@ -132,9 +149,9 @@ Return a Startup related to the angelId.
    "twitterUrl":null,
    "blogUrl":null,
    "videoUrl":null,
-   "rid":"#17:0",
-   "version": 1,
-   "class":"Startup"
+   "@rid":"#17:0",
+   "@version": 1,
+   "@class":"Startup"
 }
 ```
 
@@ -182,9 +199,9 @@ Response
    "twitterUrl":null,
    "blogUrl":null,
    "videoUrl":null,
-   "rid":"#17:0",
-   "version": 2,
-   "class":"Startup"
+   "@rid":"#17:0",
+   "@version": 2,
+   "@class":"Startup"
 }
 ```
 
@@ -232,9 +249,9 @@ Response
    "twitterUrl":null,
    "blogUrl":null,
    "videoUrl":null,
-   "rid":"#17:0",
-   "version": 1,
-   "class":"Startup"
+   "@rid":"#17:0",
+   "@version": 1,
+   "@class":"Startup"
 }
 ```
 
@@ -292,9 +309,9 @@ Receive a list of Users related to the filter startups by parameters.
          "facebookUrl":null,
          "linkedinUrl":null,
          "investor":null,
-         "rid":"#18:0",
-         "version": 1,
-         "class":"User"
+         "@rid":"#18:0",
+         "@version": 1,
+         "@class":"User"
       }
    ]
 }
@@ -322,9 +339,9 @@ Return an User related to the angelId.
          "facebookUrl":null,
          "linkedinUrl":null,
          "investor":null,
-         "rid":"#18:0",
-         "version": 1,
-         "class":"User"
+         "@rid":"#18:0",
+         "@version": 1,
+         "@class":"User"
       }
    ]
 }
@@ -368,9 +385,9 @@ Response
     "facebookUrl":null,
     "linkedinUrl":null,
     "investor":null,
-    "rid":"#18:0",
-    "version": 2,
-    "class":"User"
+    "@rid":"#18:0",
+    "@version": 2,
+    "@class":"User"
 }
 ```
 
@@ -412,9 +429,9 @@ Response
     "facebookUrl":null,
     "linkedinUrl":null,
     "investor":null,
-    "rid":"#18:0",
-    "version": 1,
-    "class":"User"
+    "@rid":"#18:0",
+    "@version": 1,
+    "@class":"User"
 }
 ```
 
@@ -448,9 +465,9 @@ Return a Location related to the angelId.
    "name":"South America",
    "displayName":"South America",
    "angelUrl":"https://angel.co/south-america",
-   "rid":"#14:3",
-   "version": 1,
-   "class":"Location"
+   "@rid":"#14:3",
+   "@version": 1,
+   "@class":"Location"
 }
 ```
 
@@ -477,9 +494,9 @@ Response
    "name":"South America",
    "displayName":"South America",
    "angelUrl":"https://angel.co/south-america",
-   "rid":"#14:3",
-   "version": 2,
-   "class":"Location"
+   "@rid":"#14:3",
+   "@version": 2,
+   "@class":"Location"
 }
 ```
 
@@ -506,9 +523,9 @@ Response
    "name":"South America",
    "displayName":"South America",
    "angelUrl":"https://angel.co/south-america",
-   "rid":"#14:3",
-   "version": 2,
-   "class":"Location"
+   "@rid":"#14:3",
+   "@version": 2,
+   "@class":"Location"
 }
 ```
 
@@ -541,9 +558,9 @@ Return a Market related to the angelId.
    "name":"Virtualization",
    "displayName":"Virtualization",
    "angelUrl":"https://angel.co/virtualization",
-   "rid":"#12:1",
-   "version": 1,
-   "class":"Market"
+   "@rid":"#12:1",
+   "@version": 1,
+   "@class":"Market"
 }
 ```
 
@@ -569,9 +586,9 @@ Response
    "name":"Virtualization 2",
    "displayName":"Virtualization 2",
    "angelUrl":"https://angel.co/virtualization",
-   "rid":"#12:1",
-   "version": 2,
-   "class":"Market"
+   "@rid":"#12:1",
+   "@version": 2,
+   "@class":"Market"
 }
 ```
 
@@ -597,9 +614,9 @@ Response
    "name":"Virtualization 2",
    "displayName":"Virtualization 2",
    "angelUrl":"https://angel.co/virtualization",
-   "rid":"#12:1",
-   "version": 1,
-   "class":"Market"
+   "@rid":"#12:1",
+   "@version": 1,
+   "@class":"Market"
 }
 ```
 
@@ -651,12 +668,13 @@ Return a RoleIn or RolesInStartup related to the angelId.
       "twitterUrl":null,
       "blogUrl":null,
       "videoUrl":null,
-      "rid":"#17:9",
-      "version": 1
+      "@rid":"#17:9",
+      "@version": 1,
+      "@class":"Startup"
    },
-   "rid":"#21:0",
-   "version": 1,
-   "class":"RoleIn"
+   "@rid":"#21:0",
+   "@version": 1,
+   "@class":"RoleIn"
 }
 ```
 
@@ -702,12 +720,13 @@ Response
       "twitterUrl":null,
       "blogUrl":null,
       "videoUrl":null,
-      "rid":"#17:9",
-      "version": 1
+      "@rid":"#17:9",
+      "@version": 1,
+      "@class":"Startup"
    },
-   "rid":"#21:0",
-   "version": 2,
-   "class":"RoleIn"
+   "@rid":"#21:0",
+   "@version": 2,
+   "@class":"RoleIn"
 }
 ```
 
@@ -737,9 +756,9 @@ Response
    "createdAt":"2010-04-02 00:00:00",
    "endedAt":null,
    "confirmed":null,
-   "rid":"#21:0",
-   "version": 1,
-   "class":"RoleIn"
+   "@rid":"#21:0",
+   "@version": 1,
+   "@class":"RoleIn"
 }
 ```
 
@@ -785,9 +804,9 @@ Return a Rounds related to the angelId.
    "participantName":null,
    "participantType":null,
    "participantId":null,
-   "rid":"#23:0",
-   "version": 1,
-   "class":"Round"
+   "@rid":"#23:0",
+   "@version": 1,
+   "@class":"Round"
 }
 ```
 
@@ -825,9 +844,9 @@ Response
    "participantName":null,
    "participantType":null,
    "participantId":null,
-   "rid":"#23:0",
-   "version": 2,
-   "class":"Round"
+   "@rid":"#23:0",
+   "@version": 2,
+   "@class":"Round"
 }
 ```
 
@@ -865,9 +884,9 @@ Response
    "participantName":null,
    "participantType":null,
    "participantId":null,
-   "rid":"#23:0",
-   "version": 1,
-   "class":"Round"
+   "@rid":"#23:0",
+   "@version": 1,
+   "@class":"Round"
 }
 ```
 
