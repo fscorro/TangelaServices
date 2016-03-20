@@ -46,28 +46,28 @@ public class QueryGeneratorTest {
     public void testGetStartupsByMarketsAndLocations() {
         String query = queryGenerator.getStartupsQuery(newArrayList("Testing", "Technology"), newArrayList("Vienna", "Manitoba"), null, null);
         assertNotNull(query);
-        assertEquals(query, "select * from Startup where out('WorkIn').name IN ['Testing','Technology'] and out('ResideIn').name IN ['Vienna','Manitoba']");
+        assertEquals(query, "select * from Startup where out('WorkIn').name IN ['Testing','Technology'] and out('ResideIn').name IN (select name from (traverse in(\"BelongTo\") from (select * from Location where name IN ['Vienna','Manitoba']) MAXDEPTH 3) where @class=\"City\")");
     }
 
     @Test
     public void testGetStartupsByLocation(){
         String query = queryGenerator.getStartupsQuery(newArrayList(), newArrayList("Vienna"), null, null);
         assertNotNull(query);
-        assertEquals(query, "select * from Startup where out('ResideIn').name IN ['Vienna']");
+        assertEquals(query, "select * from Startup where out('ResideIn').name IN (select name from (traverse in(\"BelongTo\") from (select * from Location where name IN ['Vienna']) MAXDEPTH 3) where @class=\"City\")");
     }
 
     @Test
     public void testGetStartupsByLocations(){
         String query = queryGenerator.getStartupsQuery(null, newArrayList("Vienna", "Manitoba"), null, null);
         assertNotNull(query);
-        assertEquals(query, "select * from Startup where out('ResideIn').name IN ['Vienna','Manitoba']");
+        assertEquals(query, "select * from Startup where out('ResideIn').name IN (select name from (traverse in(\"BelongTo\") from (select * from Location where name IN ['Vienna','Manitoba']) MAXDEPTH 3) where @class=\"City\")");
     }
 
     @Test
     public void testGetStartupsByMarketsAndLocationsAndQuality() {
         String query = queryGenerator.getStartupsQuery(newArrayList("Testing", "Technology"), newArrayList("Vienna", "Manitoba"), 1, null);
         assertNotNull(query);
-        assertEquals(query, "select * from Startup where out('WorkIn').name IN ['Testing','Technology'] and out('ResideIn').name IN ['Vienna','Manitoba'] and quality >= 1");
+        assertEquals(query, "select * from Startup where out('WorkIn').name IN ['Testing','Technology'] and out('ResideIn').name IN (select name from (traverse in(\"BelongTo\") from (select * from Location where name IN ['Vienna','Manitoba']) MAXDEPTH 3) where @class=\"City\") and quality >= 1");
     }
 
     @Test
@@ -82,7 +82,7 @@ public class QueryGeneratorTest {
         DateTime dt = formatter.parseDateTime("2012-01-01 00:00:00");
         String query = queryGenerator.getStartupsQuery(newArrayList("Testing", "Technology"), newArrayList("Vienna", "Manitoba"), 1, dt);
         assertNotNull(query);
-        assertEquals(query, "select * from Startup where out('WorkIn').name IN ['Testing','Technology'] and out('ResideIn').name IN ['Vienna','Manitoba'] and quality >= 1 and createdAt >= '2012-01-01 00:00:00'");
+        assertEquals(query, "select * from Startup where out('WorkIn').name IN ['Testing','Technology'] and out('ResideIn').name IN (select name from (traverse in(\"BelongTo\") from (select * from Location where name IN ['Vienna','Manitoba']) MAXDEPTH 3) where @class=\"City\") and quality >= 1 and createdAt >= '2012-01-01 00:00:00'");
     }
 
     @Test

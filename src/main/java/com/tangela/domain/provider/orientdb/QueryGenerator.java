@@ -42,7 +42,7 @@ public class QueryGenerator {
             } else {
                 sb.append(" where");
             }
-            sb.append(format(" out('" + QueryGenerator.RESIDE_IN + "').name IN [%s]", listToString(locations)));
+            sb.append(format(" out('" + QueryGenerator.RESIDE_IN + "').name IN (%s)", getCitiesFromLocation(locations)));
             and = true;
         }
 
@@ -65,6 +65,8 @@ public class QueryGenerator {
             sb.append(format(" createdAt >= '%s'", forPattern(PATTERN).print(createdAt)));
         }
 
+        System.out.println(sb.toString());
+
         return sb.toString();
     }
 
@@ -80,6 +82,10 @@ public class QueryGenerator {
 
     public String getDocumentByAngelIdAndClass(final Long angelId, String clazz) {
         return format("select * from %s where angelId = %d", clazz, angelId);
+    }
+
+    public String getCitiesFromLocation(List<String> locations) {
+        return format("select name from (traverse in(\"BelongTo\") from (select * from Location where name IN [%s]) MAXDEPTH 3) where @class=\"City\"", listToString(locations));
     }
 
     private String listToString(List<String> list) {
